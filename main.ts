@@ -72,7 +72,7 @@ namespace gdcMaqueen {
         motor_state = motorState.LEFT
     }
 
-    //% block="move forward left at $speed for $rotations rotations"
+    //% block="move forward at $speed for $rotations rotations"
     //% speed.defl=200
     //% rotations.defl=1
     export function forward(speed: number, rotations: number) {

@@ -16,6 +16,19 @@ namespace gdcMaqueen {
     let l_count = 0
     let r_count = 0
 
+    //% block="get motor state"
+    export function get_motor_state(): motorState {
+        return motor_state;
+    }
+
+    //% block="get motor $motor counter"
+    export function get_motor_count(motor: maqueen.Motors) {
+        if(motor = maqueen.Motors.M1)
+            return l_count;
+        else 
+            return r_count;
+    }
+    
     //% block="open claw"
     export function open_claw() {
         maqueen.servoRun(maqueen.Servos.S1, 60)

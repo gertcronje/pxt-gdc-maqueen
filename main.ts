@@ -121,7 +121,7 @@ namespace gdcMaqueen {
     //% block="turn right at $speed for $rotations rotations"
     //% speed.defl=50
     //% rotations.defl=1
-    function turn_right(speed: number, rotations: number) {
+    export function turn_right(speed: number, rotations: number) {
         r_count = 0
         l_count = 0
         maqueen.motorRun(maqueen.Motors.M1, maqueen.Dir.CW, speed)
@@ -133,7 +133,7 @@ namespace gdcMaqueen {
     //% block="follow line at $speed for $rotations"
     //% speed.defl=200
     //% rotations.defl=10
-    function follow_line(speed: number, rotations: number) {
+    export function follow_line(speed: number, rotations: number) {
         r_count = 0
         l_count = 0
         motor_state = motorState.FOLLOW

@@ -1,11 +1,12 @@
 {
     "name": "pxt-gdc-maqueen",
-    "version": "0.0.0",
-    "description": "",
+    "version": "0.0.1",
+    "description": "GDC Maqueen extensions",
     "dependencies": {
         "core": "*",
         "radio": "*",
-        "microphone": "*"
+        "microphone": "*",
+        "maqueen": "github:dfrobot/pxt-maqueen#v1.7.15"
     },
     "files": [
         "README.md",
@@ -23,5 +24,5 @@
     "supportedTargets": [
         "microbit"
     ],
-    "preferredEditor": "blocksprj"
+    "preferredEditor": "tsprj"
 }

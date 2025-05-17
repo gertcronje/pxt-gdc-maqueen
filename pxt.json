@@ -1,6 +1,6 @@
 {
     "name": "gdc-maqueen",
-    "version": "1.0.10",
+    "version": "1.0.11",
     "description": "GDC Maqueen extensions",
     "dependencies": {
         "core": "*",

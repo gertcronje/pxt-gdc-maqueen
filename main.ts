@@ -264,8 +264,8 @@ namespace gdcMaqueen {
                 maqueen.motorStop(maqueen.Motors.All)
                 motor_state = motorState.STOP
             }
-        } else {
-            basic.pause(100)
         }
+
+        basic.pause(100)
     })
 }

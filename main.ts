@@ -198,6 +198,13 @@ namespace gdcMaqueen {
                 } else {
                 r_speed = motor_speed
                 l_speed = motor_speed
+                basic.showLeds(`
+    . . # . .
+    . # . # .
+    # . . . #
+    . # . # .
+    . . # . .
+    `)
             }
 
             if (stop_count_reached(maqueen.Motors.All)) {

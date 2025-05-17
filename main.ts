@@ -177,9 +177,9 @@ namespace gdcMaqueen {
         if (motor_state > motorState.STOP && motor_state < motorState.LEFT) {
             if (l_count > r_count) {
                 r_speed = motor_speed
-                l_speed = 0
+                l_speed = motor_ctrl
             } else if (l_count < r_count) {
-                r_speed = 0
+                r_speed = motor_ctrl
                 l_speed = motor_speed
             } else {
                 r_speed = motor_speed

@@ -23,13 +23,20 @@ namespace gdcMaqueen {
     let l_count = 0
     let r_count = 0
     let follow_ctrl = 0
+    let motor_ctrl = 0
     let last_follow_dir = followDir.STRAIGHT
     
     follow_ctrl = 50
+    motor_ctrl = 20
 
     //% block="set follow control $value"
     export function set_follow_control(value: number) {
         follow_ctrl = value
+    }
+
+    //% block="set motor control $value"
+    export function set_motor_control(value: number) {
+        motor_ctrl = value
     }
 
     //% block="get motor state"
@@ -159,24 +166,16 @@ namespace gdcMaqueen {
     basic.forever(function () {
         if (motor_state > motorState.STOP && motor_state < motorState.LEFT) {
             if (l_count > r_count + 2) {
-                r_speed += 1
-                l_speed += -1
-                if (l_speed < motor_speed - 20) {
-                    l_speed = motor_speed - 20
-                }
-                if (r_speed > motor_speed + 20) {
-                    r_speed = motor_speed + 20
-                }
+                r_speed = motor_speed + motor_ctrl
+                l_speed = motor_speed
             } else if (l_count < r_count - 2) {
-                r_speed += -1
-                l_speed += 1
-                if (l_speed > motor_speed + 20) {
-                    l_speed = motor_speed + 20
-                }
-                if (r_speed < motor_speed - 20) {
-                    r_speed = motor_speed + 20
-                }
+                r_speed = motor_speed
+                l_speed = motor_speed + motor_ctrl
+            } else {
+                r_speed = motor_speed
+                l_speed = motor_speed
             }
+            
             if (stop_count_reached(maqueen.Motors.All)) {
                 motor_state = motorState.STOP
                 motor_speed = 0

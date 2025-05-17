@@ -175,8 +175,8 @@ namespace gdcMaqueen {
     basic.forever(function () {
         if (motor_state > motorState.STOP && motor_state < motorState.LEFT) {
             if (l_count > r_count) {
-                r_speed = motor_speed + motor_ctrl
-                l_speed = motor_speed
+                r_speed = motor_speed
+                l_speed = 0
                 basic.showLeds(`
     . . # . .
     . . . # .
@@ -186,8 +186,8 @@ namespace gdcMaqueen {
     `)
 
             } else if (l_count < r_count) {
-                r_speed = motor_speed
-                l_speed = motor_speed + motor_ctrl
+                r_speed = 0
+                l_speed = motor_speed
                 basic.showLeds(`
     . . # . .
     . # . . .

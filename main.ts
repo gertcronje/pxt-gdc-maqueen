@@ -53,10 +53,12 @@ namespace gdcMaqueen {
 
     //% block="get motor $motor counter"
     export function get_motor_count(motor: maqueen.Motors) {
-        if (motor = maqueen.Motors.M1)
+        if (motor == maqueen.Motors.M1)
             return l_count;
-        else
+        else if(motor == maqueen.Motors.M2)
             return r_count;
+        else
+            return 0 
     }
 
     //% block="open claw"

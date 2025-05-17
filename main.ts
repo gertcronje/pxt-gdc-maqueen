@@ -177,10 +177,25 @@ namespace gdcMaqueen {
             if (l_count > r_count + 2) {
                 r_speed = motor_speed + motor_ctrl
                 l_speed = motor_speed
+                basic.showLeds(`
+    . . # . .
+    . . . # .
+    # # # # #
+    . . . # .
+    . . # . .
+    `)
+
             } else if (l_count < r_count - 2) {
                 r_speed = motor_speed
                 l_speed = motor_speed + motor_ctrl
-            } else {
+                basic.showLeds(`
+    . . # . .
+    . # . . .
+    # # # # #
+    . # . . .
+    . . # . .
+    `)
+                } else {
                 r_speed = motor_speed
                 l_speed = motor_speed
             }

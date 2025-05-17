@@ -214,15 +214,15 @@ namespace gdcMaqueen {
             let r = maqueen.readPatrol(maqueen.Patrol.PatrolRight)
 
             // both on the line
-            if ((l == 1) && (r == 1)) {
+            if ((l == 0) && (r == 0)) {
                 l_speed = motor_speed
                 r_speed = motor_speed
                 last_follow_dir = followDir.STRAIGHT
-            } else if ((l == 1) && (r == 0)) { // only left on the line - turn left
+            } else if ((l == 0) && (r == 1)) { // only left on the line - turn left
                 l_speed = follow_ctrl
                 r_speed = motor_speed
                 last_follow_dir = followDir.LEFT
-            } else if ((l == 0) && (r == 1)) { // only right on the line - turn right
+            } else if ((l == 1) && (r == 0)) { // only right on the line - turn right
                 l_speed = motor_speed
                 r_speed = follow_ctrl
                 last_follow_dir = followDir.RIGHT

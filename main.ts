@@ -266,6 +266,6 @@ namespace gdcMaqueen {
             }
         }
 
-        basic.pause(100)
+        basic.pause(10)
     })
 }

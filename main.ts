@@ -174,7 +174,7 @@ namespace gdcMaqueen {
     // background task to monitor and contrl motor movement
     basic.forever(function () {
         if (motor_state > motorState.STOP && motor_state < motorState.LEFT) {
-            if (l_count > r_count + 2) {
+            if (l_count > r_count) {
                 r_speed = motor_speed + motor_ctrl
                 l_speed = motor_speed
                 basic.showLeds(`
@@ -185,7 +185,7 @@ namespace gdcMaqueen {
     . . # . .
     `)
 
-            } else if (l_count < r_count - 2) {
+            } else if (l_count < r_count) {
                 r_speed = motor_speed
                 l_speed = motor_speed + motor_ctrl
                 basic.showLeds(`

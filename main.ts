@@ -219,19 +219,19 @@ namespace gdcMaqueen {
                 r_speed = motor_speed
                 last_follow_dir = followDir.STRAIGHT
             } else if ((l == 1) && (r == 0)) { // only left on the line - turn left
-                l_speed = motor_speed - follow_ctrl
+                l_speed = follow_ctrl
                 r_speed = motor_speed
                 last_follow_dir = followDir.LEFT
             } else if ((l == 0) && (r == 1)) { // only right on the line - turn right
                 l_speed = motor_speed
-                r_speed = motor_speed - follow_ctrl
+                r_speed = follow_ctrl
                 last_follow_dir = followDir.RIGHT
             } else { // both off the line -- turn opposite from last direction
                 if (last_follow_dir == followDir.LEFT) {
                     l_speed = motor_speed
-                    r_speed = motor_speed - follow_ctrl
+                    r_speed = follow_ctrl
                 } else if (last_follow_dir == followDir.RIGHT) {
-                    l_speed = motor_speed - follow_ctrl
+                    l_speed = follow_ctrl
                     r_speed = motor_speed
                 }
             }

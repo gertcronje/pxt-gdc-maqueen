@@ -173,38 +173,17 @@ namespace gdcMaqueen {
 
     // background task to monitor and contrl motor movement
     basic.forever(function () {
+        led.toggle(0, 0)
         if (motor_state > motorState.STOP && motor_state < motorState.LEFT) {
             if (l_count > r_count) {
                 r_speed = motor_speed
                 l_speed = 0
-                basic.showLeds(`
-    . . # . .
-    . . . # .
-    # # # # #
-    . . . # .
-    . . # . .
-    `)
-
             } else if (l_count < r_count) {
                 r_speed = 0
                 l_speed = motor_speed
-                basic.showLeds(`
-    . . # . .
-    . # . . .
-    # # # # #
-    . # . . .
-    . . # . .
-    `)
-                } else {
+            } else {
                 r_speed = motor_speed
                 l_speed = motor_speed
-                basic.showLeds(`
-    . . # . .
-    . # . # .
-    # . . . #
-    . # . # .
-    . . # . .
-    `)
             }
 
             if (stop_count_reached(maqueen.Motors.All)) {

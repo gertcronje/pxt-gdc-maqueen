@@ -26,7 +26,7 @@ namespace gdcMaqueen {
     let follow_ctrl = 0
     let motor_ctrl = 0
     let last_follow_dir = followDir.STRAIGHT
-    
+
     follow_ctrl = 50
     motor_ctrl = 20
     motor_calib = 10
@@ -53,17 +53,17 @@ namespace gdcMaqueen {
 
     //% block="get motor $motor counter"
     export function get_motor_count(motor: maqueen.Motors) {
-        if(motor = maqueen.Motors.M1)
+        if (motor = maqueen.Motors.M1)
             return l_count;
-        else 
+        else
             return r_count;
     }
-    
+
     //% block="open claw"
     export function open_claw() {
         maqueen.servoRun(maqueen.Servos.S1, 60)
     }
-    
+
     //% block="close claw"
     export function close_claw() {
         maqueen.servoRun(maqueen.Servos.S1, 10)
@@ -75,13 +75,13 @@ namespace gdcMaqueen {
     export function backward(speed: number, rotations: number) {
         r_count = 0
         l_count = 0
-        l_speed = speed 
-        r_speed = speed + motor_calib
+        l_speed = speed
+        r_speed = speed
         motor_state = motorState.BACKWARD
         motor_speed = speed
         stop_count = rotations * 24
         maqueen.motorRun(maqueen.Motors.M1, maqueen.Dir.CCW, l_speed)
-        maqueen.motorRun(maqueen.Motors.M2, maqueen.Dir.CCW, r_speed)
+        maqueen.motorRun(maqueen.Motors.M2, maqueen.Dir.CCW, r_speed + motor_calib)
     }
 
     // Monitor right motor encoder
@@ -104,7 +104,7 @@ namespace gdcMaqueen {
             basic.pause(100)
         }
     }
-    
+
     //% block="turn left at $speed for $rotations rotations"
     //% speed.defl=50
     //% rotations.defl=1
@@ -112,7 +112,7 @@ namespace gdcMaqueen {
         r_count = 0
         l_count = 0
         maqueen.motorRun(maqueen.Motors.M1, maqueen.Dir.CCW, speed)
-        maqueen.motorRun(maqueen.Motors.M2, maqueen.Dir.CW, speed)
+        maqueen.motorRun(maqueen.Motors.M2, maqueen.Dir.CW, speed + motor_calib)
         stop_count = rotations * 24
         motor_state = motorState.LEFT
     }
@@ -124,12 +124,12 @@ namespace gdcMaqueen {
         r_count = 0
         l_count = 0
         l_speed = speed
-        r_speed = speed + motor_calib
+        r_speed = speed
         motor_state = motorState.FORWARD
         motor_speed = speed
         stop_count = rotations * 24
         maqueen.motorRun(maqueen.Motors.M1, maqueen.Dir.CW, l_speed)
-        maqueen.motorRun(maqueen.Motors.M2, maqueen.Dir.CW, r_speed)
+        maqueen.motorRun(maqueen.Motors.M2, maqueen.Dir.CW, r_speed + motor_calib)
     }
 
     //% block="turn right at $speed for $rotations rotations"
@@ -139,7 +139,7 @@ namespace gdcMaqueen {
         r_count = 0
         l_count = 0
         maqueen.motorRun(maqueen.Motors.M1, maqueen.Dir.CW, speed)
-        maqueen.motorRun(maqueen.Motors.M2, maqueen.Dir.CCW, speed)
+        maqueen.motorRun(maqueen.Motors.M2, maqueen.Dir.CCW, speed + motor_calib)
         stop_count = rotations * 24
         motor_state = motorState.RIGHT
     }
@@ -153,19 +153,19 @@ namespace gdcMaqueen {
         motor_state = motorState.FOLLOW
         motor_speed = speed
         l_speed = speed
-        r_speed = speed + motor_calib
+        r_speed = speed
         stop_count = rotations * 24
 
         maqueen.motorRun(maqueen.Motors.M1, maqueen.Dir.CW, l_speed)
-        maqueen.motorRun(maqueen.Motors.M2, maqueen.Dir.CW, r_speed)
+        maqueen.motorRun(maqueen.Motors.M2, maqueen.Dir.CW, r_speed + motor_calib)
     }
 
     function stop_count_reached(motor: maqueen.Motors) {
-        if(motor == maqueen.Motors.M1) 
+        if (motor == maqueen.Motors.M1)
             return l_count >= stop_count;
-        else if(motor == maqueen.Motors.M2)
+        else if (motor == maqueen.Motors.M2)
             return r_count >= stop_count;
-        else 
+        else
             return (l_count >= stop_count) && (r_count >= stop_count)
     }
 
@@ -173,16 +173,16 @@ namespace gdcMaqueen {
     basic.forever(function () {
         if (motor_state > motorState.STOP && motor_state < motorState.LEFT) {
             if (l_count > r_count + 2) {
-                r_speed = motor_speed + motor_ctrl + motor_calib
+                r_speed = motor_speed + motor_ctrl
                 l_speed = motor_speed
             } else if (l_count < r_count - 2) {
-                r_speed = motor_speed + motor_calib
+                r_speed = motor_speed
                 l_speed = motor_speed + motor_ctrl
             } else {
                 r_speed = motor_speed
                 l_speed = motor_speed
             }
-            
+
             if (stop_count_reached(maqueen.Motors.All)) {
                 motor_state = motorState.STOP
                 motor_speed = 0
@@ -190,10 +190,10 @@ namespace gdcMaqueen {
             } else {
                 if (motor_state == motorState.FORWARD) {
                     maqueen.motorRun(maqueen.Motors.M1, maqueen.Dir.CW, l_speed)
-                    maqueen.motorRun(maqueen.Motors.M2, maqueen.Dir.CW, r_speed)
+                    maqueen.motorRun(maqueen.Motors.M2, maqueen.Dir.CW, r_speed + motor_calib)
                 } else if (motor_state == motorState.BACKWARD) {
                     maqueen.motorRun(maqueen.Motors.M1, maqueen.Dir.CCW, l_speed)
-                    maqueen.motorRun(maqueen.Motors.M2, maqueen.Dir.CCW, r_speed)
+                    maqueen.motorRun(maqueen.Motors.M2, maqueen.Dir.CCW, r_speed + motor_calib)
                 }
             }
         } else if (motor_state == motorState.LEFT || motor_state == motorState.RIGHT) {
@@ -211,32 +211,32 @@ namespace gdcMaqueen {
             let r = maqueen.readPatrol(maqueen.Patrol.PatrolRight)
 
             // both on the line
-            if((l == 1) && (r == 1)) {
+            if ((l == 1) && (r == 1)) {
                 l_speed = motor_speed
-                r_speed = motor_speed + motor_calib
+                r_speed = motor_speed
                 last_follow_dir = followDir.STRAIGHT
-            } else if((l == 1) && (r == 0)) { // only left on the line - turn left
+            } else if ((l == 1) && (r == 0)) { // only left on the line - turn left
                 l_speed = motor_speed - follow_ctrl
-                r_speed = motor_speed + motor_calib
+                r_speed = motor_speed
                 last_follow_dir = followDir.LEFT
             } else if ((l == 0) && (r == 1)) { // only right on the line - turn right
-                l_speed = motor_speed 
-                r_speed = motor_speed - follow_ctrl + motor_calib
+                l_speed = motor_speed
+                r_speed = motor_speed - follow_ctrl
                 last_follow_dir = followDir.RIGHT
             } else { // both off the line -- turn opposite from last direction
-                if(last_follow_dir == followDir.LEFT) {
+                if (last_follow_dir == followDir.LEFT) {
                     l_speed = motor_speed
-                    r_speed = motor_speed - follow_ctrl + motor_calib
+                    r_speed = motor_speed - follow_ctrl
                 } else if (last_follow_dir == followDir.RIGHT) {
                     l_speed = motor_speed - follow_ctrl
-                    r_speed = motor_speed + motor_calib
+                    r_speed = motor_speed
                 }
             }
             // set motor speed
             maqueen.motorRun(maqueen.Motors.M1, maqueen.Dir.CW, l_speed)
-            maqueen.motorRun(maqueen.Motors.M2, maqueen.Dir.CW, r_speed)
+            maqueen.motorRun(maqueen.Motors.M2, maqueen.Dir.CW, r_speed + motor_calib)
 
-            if(stop_count_reached(maqueen.Motors.All)) {
+            if (stop_count_reached(maqueen.Motors.All)) {
                 maqueen.motorStop(maqueen.Motors.All)
                 motor_state = motorState.STOP
             }
